@@ -36,7 +36,7 @@ class RunFinder(object):
         org = f"--organism {self.organism}" if self.organism != '' else ''
         d = f" -d {self.amrfinder_db}" if self.amrfinder_db != '' else ''
         _id = f" --ident_min {self.identity} " if self.identity != '' else ''
-        cmd = f"parallel -j {self.jobs} --colsep '\\t' 'mkdir -p {{1}} && amrfinder -n {{2}} -o {{1}}/amrfinder.out --plus {org} --threads 1{d}{_id}' :::: {self.input}"
+        cmd = f"parallel -j {self.jobs} --colsep '\\t' 'mkdir -p {{1}} && amrfinder -n {{2}} -o {{1}}/amrfinder.out --plus {org} --print_node --threads 1{d}{_id}' :::: {self.input}"
         return cmd
     
     def _single_cmd(self):
@@ -46,7 +46,7 @@ class RunFinder(object):
         org = f"--organism {self.organism}" if self.organism != '' else ''
         d = f" -d {self.amrfinder_db}" if self.amrfinder_db else ''
         _id = f" --ident_min {self.identity} " if self.identity != '' else ''
-        cmd = f"mkdir -p {self.prefix} && amrfinder -n {self.input} -o {self.prefix}/amrfinder.out --plus {org} --threads {self.jobs}{d}{_id}"
+        cmd = f"mkdir -p {self.prefix} && amrfinder -n {self.input} -o {self.prefix}/amrfinder.out --plus {org} --print_node --threads {self.jobs}{d}{_id}"
         return cmd
     
     def _check_amrfinder(self):
